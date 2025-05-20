@@ -2,12 +2,15 @@
 
 # Make sure a filename was provided
 if [ -z "$1" ]; then
-  echo "Usage: ./run.sh ClassName"
+  echo "Usage: ./run.sh path/to/ClassName"
   exit 1
 fi
 
 CLASS="$1"
-SRC="java/$CLASS.java"
+SRC="${CLASS}.java"
+
+# Convert path to Java-style class name (e.g. calculator/Calculator → calculator.Calculator)
+CLASS_NAME="${CLASS//\//.}"
 
 # Check if the file exists
 if [ ! -f "$SRC" ]; then
@@ -23,4 +26,4 @@ if [ $? -ne 0 ]; then
 fi
 
 # Run the compiled class
-java -cp java "$CLASS"
+java "$CLASS_NAME"
